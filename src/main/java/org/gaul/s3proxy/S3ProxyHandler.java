@@ -3123,9 +3123,17 @@ public class S3ProxyHandler {
     }
 
     private static String maybeQuoteETag(String eTag) {
+        logger.debug("source eTag: {}", eTag);
+        if(eTag.contains("0x")){
+            eTag = eTag.replace("0x", "");
+        }
         if (!eTag.startsWith("\"") && !eTag.endsWith("\"")) {
             eTag = "\"" + eTag + "\"";
         }
+        if(eTag.length() %2 == 1){
+        eTag = "";
+        }
+        logger.debug("return eTag: {}", eTag);
         return eTag;
     }
 
